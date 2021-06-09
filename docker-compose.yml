@@ -1,0 +1,17 @@
+---
+version: "3"
+services:
+  dtl:
+    image: ethereumoptimism/data-transport-layer:0.3.5
+    env_file:
+      - dtl.env
+  l2geth:
+    image: ethereumoptimism/l2geth:0.3.7
+    env_file:
+      - l2geth.env
+    ports:
+      - 9999:8545
+#     volumes:
+#       - geth:/geth
+# volumes:
+#   geth:
