@@ -1,0 +1,19 @@
+{
+  "name": "op-replica",
+  "version": "1.0.0",
+  "description": "Guide to running an Optimistic geth replica",
+  "main": "healthcheck.ts",
+  "repository": "git@github.com:optimisticben/op-replica.git",
+  "author": "<annieke8@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^15.12.2",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2"
+  },
+  "dependencies": {
+    "@eth-optimism/core-utils": "^0.4.5",
+    "dotenv": "^10.0.0",
+    "ethers": "^5.3.0"
+  }
+}
