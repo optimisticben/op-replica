@@ -18,8 +18,8 @@ const binarySearchForMismatch = async (
 
     console.log(`Checking block ${middle + 1}`)
     const [replicaBlock, sequencerBlock] = await Promise.all([
-      replicaProvider.getBlock('latest') as any,
-      sequencerProvider.getBlock('latest') as any
+      replicaProvider.getBlock(middle + 1) as any,
+      sequencerProvider.getBlock(middle + 1) as any
     ])
 
     if (replicaBlock.stateRoot === sequencerBlock.stateRoot) {
