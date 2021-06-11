@@ -4,7 +4,11 @@ import * as dotenv from 'dotenv'
 
 dotenv.config()
 
-const binarySearchForMismatch = async (sequencerProvider, replicaProvider, latest) => {
+const binarySearchForMismatch = async (
+  sequencerProvider: providers.JsonRpcProvider, 
+  replicaProvider: providers.JsonRpcProvider, 
+  latest: number
+): Promise<number> => {
   console.log(`Executing a binary search to determine the first mismatched block...`)
 
   let start = 1

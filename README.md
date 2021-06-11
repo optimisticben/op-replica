@@ -32,5 +32,5 @@ To make sure your verifier is running correctly, we've provided a script that ch
 
 ```
 yarn
-ts-node sync-check.ts
+npx ts-node sync-check.ts
 ```
