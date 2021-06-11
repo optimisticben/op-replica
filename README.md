@@ -25,3 +25,12 @@ L2GETH_HTTP_PORT=9991
 DTL_IMAGE_TAG=0.3.5
 L2GETH_IMAGE_TAG=0.3.7
 ```
+
+## Sync check
+
+To make sure your verifier is running correctly, we've provided a script that checks its state roots against our sequencer. To run it, run
+
+```
+yarn
+ts-node sync-check.ts
+```
