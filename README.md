@@ -17,13 +17,21 @@ To configure the project, create a `.env` file at the project root with this opt
 - `DTL_IMAGE_TAG` The Docker image tag to use for [data-transport-layer](https://hub.docker.com/r/ethereumoptimism/data-transport-layer)
 - `L2GETH_HTTP_PORT` The port to expose for `l2geth`
 
+### Versions
+
+We recommend using the latest versions of both packages. Find them as GitHub tags [here](https://github.com/ethereum-optimism/optimism/tags) and as published Docker images linked in the badges:
+
+| Package                                                                                                                         | Docker                                                                                                                                                                                                              |
+| ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`@eth-optimism/l2geth`](https://github.com/ethereum-optimism/optimism/tree/master/l2geth)                                      | [![Docker Image Version (latest by date)](https://img.shields.io/docker/v/ethereumoptimism/l2geth)](https://hub.docker.com/r/ethereumoptimism/l2geth/tags?page=1&ordering=last_updated)                             |
+| [`@eth-optimism/data-transport-layer`](https://github.com/ethereum-optimism/optimism/tree/master/packages/data-transport-layer) | [![Docker Image Version (latest by date)](https://img.shields.io/docker/v/ethereumoptimism/data-transport-layer)](https://hub.docker.com/r/ethereumoptimism/data-transport-layer/tags?page=1&ordering=last_updated) |
 
 ### Example
 ```
 PROJECT_NETWORK=kovan
 L2GETH_HTTP_PORT=9991
-DTL_IMAGE_TAG=0.3.5
-L2GETH_IMAGE_TAG=0.3.7
+DTL_IMAGE_TAG=0.3.8
+L2GETH_IMAGE_TAG=0.3.6
 ```
 
 ## Sync check
