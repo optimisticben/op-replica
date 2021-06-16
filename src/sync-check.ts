@@ -37,7 +37,7 @@ const binarySearchForMismatch = async (
   return end
 }
 
-const main = async () => {
+export const runSyncCheck = async () => {
   const sequencerProvider = injectL2Context(new providers.JsonRpcProvider(`https://${process.env.PROJECT_NETWORK}.optimism.io`))
   const replicaProvider = injectL2Context(new providers.JsonRpcBatchProvider(`http://localhost:${process.env.L2GETH_HTTP_PORT}`))
 
@@ -65,7 +65,7 @@ const main = async () => {
   }
 }
 
-main().catch(e => {
+runSyncCheck().catch(e => {
   console.log(e)
   process.exit(1)
 })
