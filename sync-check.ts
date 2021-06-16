@@ -5,8 +5,8 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 const binarySearchForMismatch = async (
-  sequencerProvider: providers.JsonRpcProvider, 
-  replicaProvider: providers.JsonRpcProvider, 
+  sequencerProvider: providers.JsonRpcProvider,
+  replicaProvider: providers.JsonRpcProvider,
   latest: number
 ): Promise<number> => {
   console.log(`Executing a binary search to determine the first mismatched block...`)
@@ -46,13 +46,13 @@ const main = async () => {
     let replicaLatest = await replicaProvider.getBlock('latest') as any
     let sequencerCorresponding = await sequencerProvider.getBlock(replicaLatest.number) as any
 
-    if(replicaLatest.stateRoot !== sequencerCorresponding.stateRoot) {
+    if (replicaLatest.stateRoot !== sequencerCorresponding.stateRoot) {
       console.log('Latest replica state root is mismatched from sequencer')
       const firstMismatch = await binarySearchForMismatch(sequencerProvider, replicaProvider, replicaLatest.number)
       console.log(`First state root mismatch at block ${firstMismatch}`)
       throw new Error('Replica state root mismatched')
-    } 
-    
+    }
+
     console.log(`Block ${replicaLatest.number} state roots matching!`)
 
     // Fetch next block and sleep if not new
