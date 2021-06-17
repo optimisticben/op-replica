@@ -2,6 +2,8 @@ import { providers } from 'ethers'
 import { injectL2Context, sleep } from '@eth-optimism/core-utils'
 import * as dotenv from 'dotenv'
 
+import { ReplicaMetrics } from './types'
+
 dotenv.config()
 
 const binarySearchForMismatch = async (
@@ -37,7 +39,7 @@ const binarySearchForMismatch = async (
   return end
 }
 
-export const runSyncCheck = async () => {
+export const runSyncCheck = async (metrics?: ReplicaMetrics) => {
   const sequencerProvider = injectL2Context(new providers.JsonRpcProvider(`https://${process.env.PROJECT_NETWORK}.optimism.io`))
   const replicaProvider = injectL2Context(new providers.JsonRpcBatchProvider(`http://localhost:${process.env.L2GETH_HTTP_PORT}`))
 
@@ -50,10 +52,15 @@ export const runSyncCheck = async () => {
       console.log('Latest replica state root is mismatched from sequencer')
       const firstMismatch = await binarySearchForMismatch(sequencerProvider, replicaProvider, replicaLatest.number)
       console.log(`First state root mismatch at block ${firstMismatch}`)
-      throw new Error('Replica state root mismatched')
+      if (metrics) {
+        metrics.lastMatchingStateRootHeight.set(firstMismatch)
+      }
     }
 
     console.log(`Block ${replicaLatest.number} state roots matching!`)
+    if (metrics) {
+      metrics.lastMatchingStateRootHeight.set(replicaLatest.number)
+    }
 
     // Fetch next block and sleep if not new
     replicaLatest = await replicaProvider.getBlock('latest') as any
