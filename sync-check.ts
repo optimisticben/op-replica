@@ -11,22 +11,25 @@ const binarySearchForMismatch = async (
 ): Promise<number> => {
   console.log(`Executing a binary search to determine the first mismatched block...`)
 
-  let start = 1
+  let start = 0
   let end = latest
-  while (start + 1 !== end) {
+  while (start !== end) {
     const middle = Math.floor((start + end) / 2)
 
-    console.log(`Checking block ${middle + 1}`)
+    console.log(`Checking block ${middle}`)
     const [replicaBlock, sequencerBlock] = await Promise.all([
-      replicaProvider.getBlock(middle + 1) as any,
-      sequencerProvider.getBlock(middle + 1) as any
+      replicaProvider.getBlock(middle) as any,
+      sequencerProvider.getBlock(middle) as any
     ])
 
     if (replicaBlock.stateRoot === sequencerBlock.stateRoot) {
-      console.log(`State roots were still matching at block ${middle + 1}`)
+      console.log(`State roots were still matching at block ${middle}`)
       start = middle
     } else {
-      console.log(`State roots were mismatched at block ${middle + 1}`)
+      console.log(`State roots were mismatched at block ${middle}`)
+      console.log('replica', replicaBlock)
+      console.log('sequencer', sequencerBlock)
+
       end = middle
     }
   }
@@ -35,7 +38,7 @@ const binarySearchForMismatch = async (
 }
 
 const main = async () => {
-  const sequencerProvider = injectL2Context(new providers.JsonRpcProvider(`https://${process.env.PROJECT_NETWORK}-sequencer.optimism.io`))
+  const sequencerProvider = injectL2Context(new providers.JsonRpcProvider(`https://${process.env.PROJECT_NETWORK}.optimism.io`))
   const replicaProvider = injectL2Context(new providers.JsonRpcBatchProvider(`http://localhost:${process.env.L2GETH_HTTP_PORT}`))
 
   // Continuously loop while replica runs
