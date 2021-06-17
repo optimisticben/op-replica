@@ -30,6 +30,11 @@ const initMetrics = (app: express.Express) : ReplicaMetrics => {
       name: 'last_matching_state_root_height',
       help: 'Height of last matching state root of replica',
       registers: [metrics.registry]
+    }),
+    replicaSequencerHeightDiff: new metrics.client.Gauge({
+      name: 'replica_sequencer_height_diff',
+      help: 'Difference between the latest block of the sequencer and the replica',
+      registers: [metrics.registry]
     })
   }
 }
@@ -38,6 +43,8 @@ dotenv.config()
 const app = express()
 
 const replicaMetrics = initMetrics(app)
+
+// Throws error at mismatch
 runSyncCheck(replicaMetrics)
 
 app.get('/', (req, res) => {

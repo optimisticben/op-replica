@@ -55,6 +55,7 @@ export const runSyncCheck = async (metrics?: ReplicaMetrics) => {
       if (metrics) {
         metrics.lastMatchingStateRootHeight.set(firstMismatch)
       }
+      throw new Error('Replica state root mismatched')
     }
 
     console.log(`Block ${replicaLatest.number} state roots matching!`)
@@ -62,8 +63,14 @@ export const runSyncCheck = async (metrics?: ReplicaMetrics) => {
       metrics.lastMatchingStateRootHeight.set(replicaLatest.number)
     }
 
-    // Fetch next block and sleep if not new
     replicaLatest = await replicaProvider.getBlock('latest') as any
+    const sequencerLatest = await sequencerProvider.getBlock('latest')
+    const heightDiff = sequencerLatest.number - replicaLatest.number
+    console.log(`Current height difference from sequencer: ${heightDiff}`)
+    if (metrics) {
+      metrics.replicaSequencerHeightDiff.set(heightDiff)
+    }
+    // Fetch next block and sleep if not new
     while (replicaLatest.number === sequencerCorresponding.number) {
       // Could make this configurable!
       await sleep(1_000)

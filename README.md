@@ -36,9 +36,14 @@ L2GETH_IMAGE_TAG=0.4.0
 
 ## Sync check
 
-To make sure your verifier is running correctly, we've provided a script that checks its state roots against our sequencer. To run it, run
+To make sure your verifier is running correctly, we've provided a script that checks its state roots against our sequencer.
 
 ```
 yarn
 npx ts-node src/sync-check.ts
+```
+
+You can also run this sync check as an express server that pushes metrics:
+```
+npx ts-node src/index.ts
 ```
