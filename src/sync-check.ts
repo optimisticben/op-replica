@@ -40,7 +40,7 @@ const binarySearchForMismatch = async (
 }
 
 export const runSyncCheck = async (metrics?: ReplicaMetrics) => {
-  const sequencerProvider = injectL2Context(new providers.JsonRpcProvider(`https://${process.env.PROJECT_NETWORK}.optimism.io`))
+  const sequencerProvider = injectL2Context(new providers.JsonRpcProvider(`https://${process.env.PROJECT_NETWORK}-sequencer.optimism.io`))
   const replicaProvider = injectL2Context(new providers.JsonRpcBatchProvider(`http://localhost:${process.env.L2GETH_HTTP_PORT}`))
 
   // Continuously loop while replica runs
@@ -63,18 +63,18 @@ export const runSyncCheck = async (metrics?: ReplicaMetrics) => {
       metrics.lastMatchingStateRootHeight.set(replicaLatest.number)
     }
 
-    replicaLatest = await replicaProvider.getBlock('latest') as any
+    replicaLatest = await replicaProvider.getBlock('latest')
     const sequencerLatest = await sequencerProvider.getBlock('latest')
-    const heightDiff = sequencerLatest.number - replicaLatest.number
-    console.log(`Current height difference from sequencer: ${heightDiff}`)
+    console.log(`Current height difference from sequencer: ${sequencerLatest.number - replicaLatest.number}`)
     if (metrics) {
-      metrics.replicaSequencerHeightDiff.set(heightDiff)
+      metrics.replicaHeight.set(replicaLatest.number)
+      metrics.sequencerHeight.set(sequencerLatest.number)
     }
     // Fetch next block and sleep if not new
     while (replicaLatest.number === sequencerCorresponding.number) {
       // Could make this configurable!
       await sleep(1_000)
-      replicaLatest = await replicaProvider.getBlock('latest') as any
+      replicaLatest = await replicaProvider.getBlock('latest')
     }
   }
 }

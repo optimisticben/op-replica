@@ -31,9 +31,14 @@ const initMetrics = (app: express.Express) : ReplicaMetrics => {
       help: 'Height of last matching state root of replica',
       registers: [metrics.registry]
     }),
-    replicaSequencerHeightDiff: new metrics.client.Gauge({
-      name: 'replica_sequencer_height_diff',
-      help: 'Difference between the latest block of the sequencer and the replica',
+    replicaHeight: new metrics.client.Gauge({
+      name: 'replica_height',
+      help: 'Block number of the latest block from the replica',
+      registers: [metrics.registry]
+    }),
+    sequencerHeight: new metrics.client.Gauge({
+      name: 'sequencer_height',
+      help: 'Block number of the latest block from the sequencer',
       registers: [metrics.registry]
     })
   }
