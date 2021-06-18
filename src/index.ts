@@ -11,7 +11,7 @@ import { runSyncCheck } from './sync-check'
  * Helper functions
  */
 
-const initMetrics = (app: express.Express) : ReplicaMetrics => {
+const initMetrics = (app: express.Express): ReplicaMetrics => {
   const metrics = new Metrics({
     prefix: 'replica_health',
     labels: {
