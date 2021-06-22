@@ -28,10 +28,10 @@ We recommend using the latest versions of both packages. Find them as GitHub tag
 
 ### Example
 ```
-PROJECT_NETWORK=kovan
+PROJECT_NETWORK=mainnet
 L2GETH_HTTP_PORT=9991
-DTL_IMAGE_TAG=0.3.8
-L2GETH_IMAGE_TAG=0.3.6
+DTL_IMAGE_TAG=0.4.0
+L2GETH_IMAGE_TAG=0.4.0
 ```
 
 ## Sync check
