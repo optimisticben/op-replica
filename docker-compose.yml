@@ -3,8 +3,12 @@ version: "3"
 services:
   dtl:
     image: ethereumoptimism/data-transport-layer:${DTL_IMAGE_TAG:-latest}
+    environment:
+      DATA_TRANSPORT_LAYER__L1_RPC_ENDPOINT: ${L1_RPC_ENDPOINT}
     env_file:
       - ${PROJECT_NETWORK:-mainnet}/dtl.env
+    ports:
+      - ${DTL_PORT:-7878}:7878
   l2geth:
     image: ethereumoptimism/l2geth:${L2GETH_IMAGE_TAG:-latest}
     env_file:
