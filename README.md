@@ -43,7 +43,7 @@ yarn
 npx ts-node src/sync-check.ts
 ```
 
-You can also run this sync check as an express server that pushes metrics:
+You can also run this sync check as an express server that exposes metrics:
 ```
 npx ts-node src/index.ts
 ```

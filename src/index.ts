@@ -13,7 +13,6 @@ import { runSyncCheck } from './sync-check'
 
 const initMetrics = (app: express.Express): ReplicaMetrics => {
   const metrics = new Metrics({
-    prefix: 'replica_health',
     labels: {
       network: process.env.PROJECT_NETWORK,
       gethRelease: process.env.L2GETH_IMAGE_TAG,
@@ -27,17 +26,17 @@ const initMetrics = (app: express.Express): ReplicaMetrics => {
 
   return {
     lastMatchingStateRootHeight: new metrics.client.Gauge({
-      name: 'last_matching_state_root_height',
+      name: 'replica_health_last_matching_state_root_height',
       help: 'Height of last matching state root of replica',
       registers: [metrics.registry]
     }),
     replicaHeight: new metrics.client.Gauge({
-      name: 'replica_height',
+      name: 'replica_health_height',
       help: 'Block number of the latest block from the replica',
       registers: [metrics.registry]
     }),
     sequencerHeight: new metrics.client.Gauge({
-      name: 'sequencer_height',
+      name: 'replica_health_sequencer_height',
       help: 'Block number of the latest block from the sequencer',
       registers: [metrics.registry]
     })
@@ -53,7 +52,14 @@ const replicaMetrics = initMetrics(app)
 runSyncCheck(replicaMetrics)
 
 app.get('/', (req, res) => {
-  res.send('hello')
+  res.send(`
+    <head><title>Replica healthcheck</title></head>
+    <body>
+    <h1>Replica healthcheck</h1>
+    <p><a href="/metrics">Metrics</a></p>
+    </body>
+    </html>
+  `)
 })
 
 app.listen(3000, () => {

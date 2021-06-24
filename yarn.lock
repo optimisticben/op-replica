@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@eth-optimism/common-ts@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@eth-optimism/common-ts/-/common-ts-0.1.3.tgz#be4131dff80b09fcad8d2ed2a5167a1dbf354a6a"
-  integrity sha512-/Ef7WjTMXaDymGIoLnbJY6mwJNCFpYFx3fKca1Emae5xa1qQ4tBnC4Vy18CVOvabfj3+CYvZiSpyDl/cp7Jx7g==
+"@eth-optimism/common-ts@0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@eth-optimism/common-ts/-/common-ts-0.1.4.tgz#392d639dd8f055e81387928f3efe807859495fc4"
+  integrity sha512-Q3yFWzfMwdrueJFxvhqvJiqJVowvOalrWePWbTDeMbAkMnpdoiMXfIEdTNr/LMT8EOgJbEOYIc95jsP+Ftws5w==
   dependencies:
     "@sentry/node" "^6.2.5"
     express "^4.17.1"
