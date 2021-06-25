@@ -5,6 +5,10 @@ import * as dotenv from 'dotenv'
 import { ReplicaMetrics } from './types'
 
 dotenv.config()
+// Constants
+const ETH_NETWORK = process.env.ETH_NETWORK || 'mainnet'
+const ETH_NETWORK_RPC_PROVIDER = process.env.ETH_NETWORK_RPC_PROVIDER || `https://${ETH_NETWORK}-sequencer.optimism.io`
+const ETH_REPLICA_RPC_PROVIDER = process.env.ETH_REPLICA_RPC_PROVIDER || 'http://localhost:8545'
 
 const binarySearchForMismatch = async (
   sequencerProvider: providers.JsonRpcProvider,
@@ -40,8 +44,8 @@ const binarySearchForMismatch = async (
 }
 
 export const runSyncCheck = async (metrics?: ReplicaMetrics) => {
-  const sequencerProvider = injectL2Context(new providers.JsonRpcProvider(`https://${process.env.PROJECT_NETWORK}-sequencer.optimism.io`))
-  const replicaProvider = injectL2Context(new providers.JsonRpcBatchProvider(`http://localhost:${process.env.L2GETH_HTTP_PORT}`))
+  const sequencerProvider = injectL2Context(new providers.JsonRpcProvider(ETH_NETWORK_RPC_PROVIDER))
+  const replicaProvider = injectL2Context(new providers.JsonRpcBatchProvider(ETH_REPLICA_RPC_PROVIDER))
 
   // Continuously loop while replica runs
   while (true) {
