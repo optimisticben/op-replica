@@ -7,7 +7,7 @@ import { ReplicaMetrics } from './types'
 dotenv.config()
 // Constants
 const ETH_NETWORK = process.env.ETH_NETWORK || 'mainnet'
-const ETH_NETWORK_RPC_PROVIDER = process.env.ETH_NETWORK_RPC_PROVIDER || `https://${ETH_NETWORK}-sequencer.optimism.io`
+const ETH_NETWORK_RPC_PROVIDER = process.env.ETH_NETWORK_RPC_PROVIDER || `https://${ETH_NETWORK}.optimism.io`
 const ETH_REPLICA_RPC_PROVIDER = process.env.ETH_REPLICA_RPC_PROVIDER || 'http://localhost:8545'
 
 const binarySearchForMismatch = async (
