@@ -1,0 +1,39 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: mainnet-replica-0-4-6
+commonLabels:
+  network: mainnet
+  provider: internal
+
+bases:
+  - ../../envs/mainnet/
+
+resources:
+  - ../../bases/data-transport-layer
+  - ../../bases/l2geth-replica
+  - ../../bases/configmaps
+  - ../../bases/servicemonitors
+  - ../../bases/replica-healthcheck
+  - ./l2geth-volume.yaml
+
+images:
+  - name: ethereumoptimism/data-transport-layer
+    newName: ethereumoptimism/data-transport-layer
+    newTag: 0.4.2
+  - name: ethereumoptimism/l2geth
+    newName: ethereumoptimism/l2geth
+    newTag: 0.4.6
+  - name: ethereumoptimism/replica-healthcheck
+    newName: optimisticben/replica-healthcheck@sha256
+    newTag: 3e8cc21f556ef8d06c0c781bb88a4f06ca0905194641becab6f302e442164140
+
+patchesStrategicMerge:
+  - ./patches/l2geth-resources.yaml
+
+patches:
+  - path: ./patches/l2geth-volume.yaml
+    target:
+      group: apps
+      version: v1
+      kind: StatefulSet
+      name: l2geth-replica
