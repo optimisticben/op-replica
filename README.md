@@ -1,6 +1,7 @@
-# Optimism replica
+# Optimistic Ethereum Replica
 
-This project can be used to set up a local Optmism replica.
+This project lets you set up a local read-only replica to the Optimistic Ethereum chain (either the main one or the Kovan testnet). This is the
+only kind of replica that makes sense in this environment. [New transactions are submitted either to the sequencer 
 
 ## About
 
