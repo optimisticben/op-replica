@@ -1,4 +1,4 @@
-# Optimistic Ethereum Replica
+# Running a Network Node
 
 This project lets you set up a local read-only replica of the Optimistic Ethereum chain (either the main one or the Kovan testnet). [New 
 transactions are submitted either to the sequencer outside of Ethereum or to the Canonical Transaction Chain on 
