@@ -1,8 +1,8 @@
 # Optimistic Ethereum Replica
 
-This project lets you set up a local read-only replica to the Optimistic Ethereum chain (either the main one or the Kovan testnet). This is the
-only kind of replica that makes sense in this environment. [New transactions are submitted either to the sequencer outside of Ethereum or to
-the Canonical Transaction Chain on L1](https://research.paradigm.xyz/optimism#data-availability-batches), so a replica of L2 does not make sense.
+This project lets you set up a local read-only replica to the Optimistic Ethereum chain (either the main one or the Kovan testnet). [New 
+transactions are submitted either to the sequencer outside of Ethereum or to the Canonical Transaction Chain on 
+L1](https://research.paradigm.xyz/optimism#data-availability-batches), so submitting transactions to an L2 replica does not make sense.
 
 ## About
 
