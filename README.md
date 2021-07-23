@@ -29,7 +29,7 @@ In addition, if you want to run the sync test, you need:
 
 ## Configuration
 
-To configure the project, copy the `.env.example` file to `.env`.
+To configure the project, copy the `env.example` file to `.env`.
 Set `L1_RPC_ENDPOINT` in the `.env` file to your Ethereum Layer1 RPC provider (local node, Infura, etc.)
 
 ### Additional Settings
@@ -62,11 +62,25 @@ We recommend using the latest versions of both docker images. Find them as GitHu
 
 ## Usage
 
-```sh
-docker-compose up -d
-```
+- Start the replica:
+   ```sh
+   docker-compose up -d
+   ```
 
+- Get the logs for `l2geth`:
+  ```sh
+  docker logs op-replica_l2geth_1 
+  ```
 
+- Get the logs for `data-transport-layer`:
+  ```sh
+  docker logs op-replica_dtl_1
+  ```
+
+- Stop the replica:
+  ```sh
+  docker-compose down
+  ```
 
 
 ## Sync Check
