@@ -2,20 +2,37 @@
 
 This project can be used to set up a local Optmism replica.
 
+## About
+
+An Optimism replica currently requires 2 components. A `data-transport-layer` component which retrieves and indexes blocks for the other component, `l2geth`. `l2geth` then provides the layer 2 endpoint.
+
+The data-transport-layer requires an Ethereum layer1 RPC provider. This can be a your own local node, a hosted Infura node, etc.
+
+## Required configuration
+
+To configure the project, copy the `.env.example` file to `.env`.
+Set `L1_RPC_ENDPOINT` in the `.env` file to your Ethereum Layer1 RPC provider (local node, Infura, etc.)
+
+## Other configuration
+
+Change any other settings required for your environment
+
+| Variable  | Purpose |
+| ------------- | ------------- |
+| L1_RPC_ENDPOINT | External layer 1 RPC provider (you provide) |
+| DTL_IMAGE_TAG | Data transport layer version |
+| DTL_PORT | Port number for the data-transport-layer endpoint |
+| ETH_NETWORK | Ethereum Layer1 and Layer2 network (mainnet,kovan) |
+| ETH_NETWORK_RPC_PROVIDER | Layer2 source of truth endpoint, used for the sync check |
+| ETH_REPLICA_RPC_PROVIDER | Layer2 local replica endpoint, used for the sync check |
+| L2GETH_HTTP_PORT | Port number for the l2geth endpoint |
+| L2GETH_IMAGE_TAG | L2geth version |
+
 ## Usage
 
 ```
 docker-compose up -d
 ```
-
-## Configuration
-
-To configure the project, create a `.env` file at the project root with this optional settings.
-
-- `PROJECT_NETWORK` The name of the network to use, `kovan` or `mainnet`
-- `L2GETH_IMAGE_TAG` The Docker image tag to use for [l2geth](https://hub.docker.com/r/ethereumoptimism/l2geth)
-- `DTL_IMAGE_TAG` The Docker image tag to use for [data-transport-layer](https://hub.docker.com/r/ethereumoptimism/data-transport-layer)
-- `L2GETH_HTTP_PORT` The port to expose for `l2geth`
 
 ### Versions
 
@@ -26,13 +43,6 @@ We recommend using the latest versions of both packages. Find them as GitHub tag
 | [`@eth-optimism/l2geth`](https://github.com/ethereum-optimism/optimism/tree/master/l2geth)                                      | [![Docker Image Version (latest by date)](https://img.shields.io/docker/v/ethereumoptimism/l2geth)](https://hub.docker.com/r/ethereumoptimism/l2geth/tags?page=1&ordering=last_updated)                             |
 | [`@eth-optimism/data-transport-layer`](https://github.com/ethereum-optimism/optimism/tree/master/packages/data-transport-layer) | [![Docker Image Version (latest by date)](https://img.shields.io/docker/v/ethereumoptimism/data-transport-layer)](https://hub.docker.com/r/ethereumoptimism/data-transport-layer/tags?page=1&ordering=last_updated) |
 
-### Example
-```
-PROJECT_NETWORK=mainnet
-L2GETH_HTTP_PORT=9991
-DTL_IMAGE_TAG=0.4.0
-L2GETH_IMAGE_TAG=0.4.0
-```
 
 ## Sync check
 
