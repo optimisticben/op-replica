@@ -6,16 +6,19 @@ services:
     environment:
       DATA_TRANSPORT_LAYER__L1_RPC_ENDPOINT: ${L1_RPC_ENDPOINT}
     env_file:
-      - ${PROJECT_NETWORK:-mainnet}/dtl.env
+      - ${ETH_NETWORK:-mainnet}/dtl.env
     ports:
       - ${DTL_PORT:-7878}:7878
+    volumes:
+      - dtl:/db
   l2geth:
     image: ethereumoptimism/l2geth:${L2GETH_IMAGE_TAG:-latest}
     env_file:
-      - ${PROJECT_NETWORK:-mainnet}/l2geth.env
+      - ${ETH_NETWORK:-mainnet}/l2geth.env
     ports:
-      - ${L2GETH_HTTP_PORT:-8545}:8545
-#     volumes:
-#       - geth:/geth
-# volumes:
-#   geth:
+      - ${L2GETH_HTTP_PORT:-9991}:8545
+    volumes:
+      - geth:/geth
+volumes:
+  dtl:
+  geth:
