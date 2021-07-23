@@ -1,44 +1,57 @@
 # Optimistic Ethereum Replica
 
-This project lets you set up a local read-only replica to the Optimistic Ethereum chain (either the main one or the Kovan testnet). [New 
+This project lets you set up a local read-only replica of the Optimistic Ethereum chain (either the main one or the Kovan testnet). [New 
 transactions are submitted either to the sequencer outside of Ethereum or to the Canonical Transaction Chain on 
 L1](https://research.paradigm.xyz/optimism#data-availability-batches), so submitting transactions to an L2 replica does not make sense.
 
-## About
+## Architecture
 
-An Optimism replica currently requires 2 components. A `data-transport-layer` component which retrieves and indexes blocks for the other component, `l2geth`. `l2geth` then provides the layer 2 endpoint.
+You need two components to replicate Optimistic Ethereum:
 
-The data-transport-layer requires an Ethereum layer1 RPC provider. This can be a your own local node, a hosted Infura node, etc.
+- `data-transport-layer`, which retrieves and indexes blocks from L1. To access L1 you need an Ethereum Layer 1 provider, such as 
+  [Infura](https://infura.io/).
 
-## Required configuration
+- `l2geth`, which provides an Ethereum node where you applications can connect and run API calls.
+
+
+## Software Packages
+
+These packages are required to run the replica:
+
+1. [Docker](https://www.docker.com/)
+1. [Docker compose](https://docs.docker.com/compose/install/)
+
+In addition, if you want to run the sync test, you need:
+
+3. [Node.js](https://nodejs.org/en/), version 12 or later
+4. [Classic Yarn](https://classic.yarnpkg.com/lang/en/)
+
+
+## Configuration
 
 To configure the project, copy the `.env.example` file to `.env`.
 Set `L1_RPC_ENDPOINT` in the `.env` file to your Ethereum Layer1 RPC provider (local node, Infura, etc.)
 
-## Other configuration
+### Additional Settings
 
 Change any other settings required for your environment
 
-| Variable  | Purpose |
-| ------------- | ------------- |
-| L1_RPC_ENDPOINT | External layer 1 RPC provider (you provide) |
-| DTL_IMAGE_TAG | Data transport layer version |
-| DTL_PORT | Port number for the data-transport-layer endpoint |
-| ETH_NETWORK | Ethereum Layer1 and Layer2 network (mainnet,kovan) |
-| ETH_NETWORK_RPC_PROVIDER | Layer2 source of truth endpoint, used for the sync check |
-| ETH_REPLICA_RPC_PROVIDER | Layer2 local replica endpoint, used for the sync check |
-| L2GETH_HTTP_PORT | Port number for the l2geth endpoint |
-| L2GETH_IMAGE_TAG | L2geth version |
+| Variable                 | Purpose                                                  | Default
+| ------------------------ | -------------------------------------------------------- | ----------- 
+| L1_RPC_ENDPOINT          | External layer 1 RPC provider (you provide)              | -
+| DTL_IMAGE_TAG            | Data transport layer version                             | 0.4.3
+| DTL_PORT                 | Port number for the data-transport-layer endpoint        | 7879
+| ETH_NETWORK              | Ethereum Layer1 and Layer2 network (mainnet,kovan)       | mainnet
+| ETH_NETWORK_RPC_PROVIDER | Layer2 source of truth endpoint, used for the sync check | https://mainnet.optimism.io
+| ETH_REPLICA_RPC_PROVIDER | Layer2 local replica endpoint, used for the sync check   | http://localhost:9991
+| L2GETH_HTTP_PORT         | Port number for the l2geth endpoint                      | 9991
+| L2GETH_IMAGE_TAG         | L2geth version                                           | 0.4.6
 
-## Usage
 
-```
-docker-compose up -d
-```
+### Docker Image Versions
 
-### Versions
-
-We recommend using the latest versions of both packages. Find them as GitHub tags [here](https://github.com/ethereum-optimism/optimism/tags) and as published Docker images linked in the badges:
+We recommend using the latest versions of both docker images. Find them as GitHub tags 
+[here](https://github.com/ethereum-optimism/optimism/tags) and as published Docker images linked in the badges:
 
 | Package                                                                                                                         | Docker                                                                                                                                                                                                              |
 | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -46,9 +59,19 @@ We recommend using the latest versions of both packages. Find them as GitHub tag
 | [`@eth-optimism/data-transport-layer`](https://github.com/ethereum-optimism/optimism/tree/master/packages/data-transport-layer) | [![Docker Image Version (latest by date)](https://img.shields.io/docker/v/ethereumoptimism/data-transport-layer)](https://hub.docker.com/r/ethereumoptimism/data-transport-layer/tags?page=1&ordering=last_updated) |
 
 
-## Sync check
 
-To make sure your verifier is running correctly, we've provided a script that checks its state roots against our sequencer.
+## Usage
+
+```sh
+docker-compose up -d
+```
+
+
+
+
+## Sync Check
+
+To make sure your replica is running correctly, we've provided a script that checks its state roots against our sequencer.
 
 ```
 yarn
