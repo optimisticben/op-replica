@@ -29,7 +29,7 @@ In addition, if you want to run the sync test, you need:
 
 ## Configuration
 
-To configure the project, copy the `env.example` file to `.env`.
+To configure the project, clone this repository and copy the `env.example` file to `.env`.
 Set `L1_RPC_ENDPOINT` in the `.env` file to your Ethereum Layer1 RPC provider (local node, Infura, etc.)
 
 ### Additional Settings
