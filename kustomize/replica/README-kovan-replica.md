@@ -1,6 +1,6 @@
 # kovan-replica
 
-This README covers the features used in the [kovan replica overlay](./kovan-replica-0-4-3/kustomization.yaml)
+This README covers the features used in the [kovan replica overlay](./overlays/kovan-replica-0-4-3/kustomization.yaml)
 
 The first 2 lines are required to be a valid kustomzation target and describe how the file will be processed.
 
