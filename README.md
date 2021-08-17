@@ -96,3 +96,12 @@ You can also run this sync check as an express server that exposes metrics:
 ```
 npx ts-node src/index.ts
 ```
+
+## Transaction-write latency Check
+
+We've also provided a script to test a replica endpoint's transaction latency.
+
+```
+yarn
+npx ts-node src/tx-latency.ts
+```
