@@ -16,8 +16,13 @@ spec:
             - "0.0.0.0"
             - --pprofport
             - "6060"
+          env:
+            - name: IPC_DISABLE
+              value: "false"
           resources:
             limits:
-              memory: 30Gi
+              cpu: "2"
+              memory: 8Gi
             requests:
-              memory: 20Gi
+              cpu: "1"
+              memory: 4Gi

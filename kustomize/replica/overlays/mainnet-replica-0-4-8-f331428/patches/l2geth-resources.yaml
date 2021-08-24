@@ -10,6 +10,8 @@ spec:
         - name: l2geth-replica
           resources:
             limits:
-              memory: 12Gi
-            requests:
+              cpu: "2"
               memory: 8Gi
+            requests:
+              cpu: "1"
+              memory: 4Gi
