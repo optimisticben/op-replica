@@ -1,18 +1,25 @@
 # Running a Network Node
 
-This project lets you set up a local read-only replica of the Optimistic Ethereum chain (either the main one or the Kovan testnet). [New 
-transactions are submitted either to the sequencer outside of Ethereum or to the Canonical Transaction Chain on 
+This project lets you set up a local read-only replica of the Optimistic Ethereum chain (either the main one or the Kovan testnet). [New
+transactions are submitted either to the sequencer outside of Ethereum or to the Canonical Transaction Chain on
 L1](https://research.paradigm.xyz/optimism#data-availability-batches), so submitting transactions to an L2 replica does not make sense.
 
 ## Architecture
 
 You need two components to replicate Optimistic Ethereum:
 
-- `data-transport-layer`, which retrieves and indexes blocks from L1. To access L1 you need an Ethereum Layer 1 provider, such as 
+- `data-transport-layer`, which retrieves and indexes blocks from L1. To access L1 you need an Ethereum Layer 1 provider, such as
   [Infura](https://infura.io/).
 
 - `l2geth`, which provides an Ethereum node where you applications can connect and run API calls.
 
+## Resource requirements
+
+The `data-tansport-layer` should run with 1 CPU and 256Mb of memory.
+
+The `l2geth` process should run with 1 or 2 CPUs and between 4 and 8Gb of memory.
+
+With this configuration a synchronization from block 0 to current height is expect to take about 8 hours.
 
 ## Software Packages
 
@@ -37,7 +44,7 @@ Set `L1_RPC_ENDPOINT` in the `.env` file to your Ethereum Layer1 RPC provider (l
 Change any other settings required for your environment
 
 | Variable                 | Purpose                                                  | Default
-| ------------------------ | -------------------------------------------------------- | ----------- 
+| ------------------------ | -------------------------------------------------------- | -----------
 | L1_RPC_ENDPOINT          | External layer 1 RPC provider (you provide)              | -
 | DTL_IMAGE_TAG            | Data transport layer version                             | 0.4.3
 | DTL_PORT                 | Port number for the data-transport-layer endpoint        | 7879
@@ -50,7 +57,7 @@ Change any other settings required for your environment
 
 ### Docker Image Versions
 
-We recommend using the latest versions of both docker images. Find them as GitHub tags 
+We recommend using the latest versions of both docker images. Find them as GitHub tags
 [here](https://github.com/ethereum-optimism/optimism/tags) and as published Docker images linked in the badges:
 
 | Package                                                                                                                         | Docker                                                                                                                                                                                                              |
@@ -69,7 +76,7 @@ We recommend using the latest versions of both docker images. Find them as GitHu
 
 - Get the logs for `l2geth`:
   ```sh
-  docker logs op-replica_l2geth_1 
+  docker logs op-replica_l2geth_1
   ```
 
 - Get the logs for `data-transport-layer`:
