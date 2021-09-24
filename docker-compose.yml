@@ -13,6 +13,8 @@ services:
       - dtl:/db
   l2geth:
     image: ethereumoptimism/l2geth:${L2GETH_IMAGE_TAG:-latest}
+    command:
+      - --datadir=/geth
     env_file:
       - ${ETH_NETWORK:-mainnet}/l2geth.env
     ports:
