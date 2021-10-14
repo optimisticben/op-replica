@@ -1,7 +1,8 @@
 # Running a Network Node
 
-This project lets you set up a local read-only replica of the Optimistic Ethereum chain (either the main one or the Kovan testnet). [New
-transactions are submitted either to the sequencer outside of Ethereum or to the Canonical Transaction Chain on
+This project lets you set up a local read-only replica of the Optimistic Ethereum chain (either the main one or the Kovan testnet). This specific branch is for
+the Kovan testnet running on [OVM 2.0](https://community.optimism.io/docs/developers/l2/changeset.html).
+[New transactions are submitted either to the sequencer outside of Ethereum or to the Canonical Transaction Chain on
 L1](https://research.paradigm.xyz/optimism#data-availability-batches), so submitting transactions to an L2 replica does not make sense.
 
 ## Architecture
@@ -46,13 +47,13 @@ Change any other settings required for your environment
 | Variable                 | Purpose                                                  | Default
 | ------------------------ | -------------------------------------------------------- | -----------
 | L1_RPC_ENDPOINT          | External layer 1 RPC provider (you provide)              | -
-| DTL_IMAGE_TAG            | Data transport layer version                             | 0.4.3
+| DTL_IMAGE_TAG            | Data transport layer version                             | prerelease-0.5.0-rc-0-821e271
 | DTL_PORT                 | Port number for the data-transport-layer endpoint        | 7879
 | ETH_NETWORK              | Ethereum Layer1 and Layer2 network (mainnet,kovan)       | mainnet (change to `kovan` for the test network)
 | ETH_NETWORK_RPC_PROVIDER | Layer2 source of truth endpoint, used for the sync check | https://mainnet.optimism.io (change to `https://kovan.optimism.io` for the test network)
 | ETH_REPLICA_RPC_PROVIDER | Layer2 local replica endpoint, used for the sync check   | http://localhost:9991
 | L2GETH_HTTP_PORT         | Port number for the l2geth endpoint                      | 9991
-| L2GETH_IMAGE_TAG         | L2geth version                                           | 0.4.6
+| L2GETH_IMAGE_TAG         | L2geth version                                           | prerelease-0.5.0-rc-0-821e271
 
 
 ### Docker Image Versions
