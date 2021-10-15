@@ -10,3 +10,6 @@ configMapGenerator:
       - ./wait-for-dtl.sh
       - ./wait-for-l1.sh
       - ./wait-for-l2.sh
+  - name: geth-scripts
+    files:
+      - ./check-for-chaindata.sh
