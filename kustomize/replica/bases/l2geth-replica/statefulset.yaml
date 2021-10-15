@@ -11,6 +11,20 @@ spec:
       terminationGracePeriodSeconds: 10
       restartPolicy: Always
       initContainers:
+        - name: geth-init
+          image: ethereumoptimism/l2geth
+          command:
+            - sh
+            - -c
+            - /geth-scripts/check-for-chaindata.sh
+          envFrom:
+            - configMapRef:
+                name: l2geth-replica
+          volumeMounts:
+            - name: geth-scripts
+              mountPath: /geth-scripts
+            - name: l2geth-replica-data
+              mountPath: /geth
         - name: wait-for-dtl
           image: nicolaka/netshoot
           command: ['bash', '-c', '/script/wait/wait-for-dtl.sh']
@@ -26,6 +40,14 @@ spec:
         command:
           - geth
           - --datadir=/geth
+          - --password=$(DATADIR)/password
+          - --allow-insecure-unlock
+          - --unlock=$(BLOCK_SIGNER_ADDRESS)
+          - --mine
+          - --miner.etherbase=$(BLOCK_SIGNER_ADDRESS)
+          # - sh
+          # - -c
+          # - "sleep infinity"
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8545
@@ -49,6 +71,10 @@ spec:
           initialDelaySeconds: 15
           periodSeconds: 10
       volumes:
+        - name: geth-scripts
+          configMap:
+            name: geth-scripts
+            defaultMode: 0777
         - name: liveliness-script
           configMap:
             name: liveliness-script
