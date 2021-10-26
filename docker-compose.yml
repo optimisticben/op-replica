@@ -1,26 +1,37 @@
 ---
 version: "3"
 services:
-  dtl:
+  data-transport-layer:
     image: ethereumoptimism/data-transport-layer:${DTL_IMAGE_TAG:-latest}
-    environment:
-      DATA_TRANSPORT_LAYER__L1_RPC_ENDPOINT: ${L1_RPC_ENDPOINT}
     env_file:
-      - ${ETH_NETWORK:-mainnet}/dtl.env
+      - .env
+      - ${SHARED_ENV_PATH}/data-transport-layer.env
     ports:
       - ${DTL_PORT:-7878}:7878
     volumes:
       - dtl:/db
-  l2geth:
+  l2geth-replica:
     image: ethereumoptimism/l2geth:${L2GETH_IMAGE_TAG:-latest}
-    command:
-      - --datadir=/geth
+    entrypoint:
+      - /bin/sh
+      - -c
+      #- "sleep infinity"
+      - "/scripts/check-for-chaindata.sh && /scripts/l2geth-replica-start.sh"
     env_file:
-      - ${ETH_NETWORK:-mainnet}/l2geth.env
+      - .env
+      - ${SHARED_ENV_PATH}/l2geth-replica.env
     ports:
       - ${L2GETH_HTTP_PORT:-9991}:8545
     volumes:
       - geth:/geth
+      - ./kustomize/replica/bases/configmaps/:/scripts/
+  replica-healthcheck:
+    image: ethereumoptimism/replica-healthcheck:${L2GETH_IMAGE_TAG:-latest}
+    env_file:
+      - .env
+      - kustomize/replica/envs/kovan/replica-healthcheck.env
+    volumes:
+      - ./kustomize/replica/bases/configmaps/:/scripts/
 volumes:
   dtl:
   geth:
