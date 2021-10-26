@@ -39,15 +39,12 @@ spec:
         image: ethereumoptimism/l2geth
         command:
           - geth
-          - --datadir=/geth
+          - --datadir=$(DATADIR)
           - --password=$(DATADIR)/password
           - --allow-insecure-unlock
           - --unlock=$(BLOCK_SIGNER_ADDRESS)
           - --mine
           - --miner.etherbase=$(BLOCK_SIGNER_ADDRESS)
-          # - sh
-          # - -c
-          # - "sleep infinity"
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8545
@@ -71,10 +68,8 @@ spec:
           initialDelaySeconds: 15
           periodSeconds: 10
       volumes:
-        - name: geth-scripts
-          configMap:
-            name: geth-scripts
-            defaultMode: 0777
+        - name: l2geth-replica-data
+          emptyDir: {}
         - name: liveliness-script
           configMap:
             name: liveliness-script
@@ -83,5 +78,7 @@ spec:
           configMap:
             name: wait-scripts
             defaultMode: 0777
-        - name: l2geth-replica-data
-          emptyDir: {}
+        - name: geth-scripts
+          configMap:
+            name: geth-scripts
+            defaultMode: 0777
