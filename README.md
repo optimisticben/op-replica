@@ -37,7 +37,10 @@ In addition, if you want to run the sync test, you need:
 ## Configuration
 
 To configure the project, clone this repository and copy the `env.example` file to `.env`.
-Set `L1_RPC_ENDPOINT` in the `.env` file to your Ethereum Layer1 RPC provider (local node, Infura, etc.)
+
+Set the `SHARED_ENV_PATH` to an existing collection of environment files, or copy those, make your changes and point to that new directory.
+
+Fill in the rest of the `.env` file with your endpoints.
 
 ### Additional Settings
 
@@ -53,7 +56,9 @@ Change any other settings required for your environment
 | ETH_REPLICA_RPC_PROVIDER | Layer2 local replica endpoint, used for the sync check   | http://localhost:9991
 | L2GETH_HTTP_PORT         | Port number for the l2geth endpoint                      | 9991
 | L2GETH_IMAGE_TAG         | L2geth version                                           | 0.4.6
-
+| L2_RECIPIENT_ADDRESS     | Only used for tx latency testing (not needed)            |
+| L2_USER_PRIVATE_KEY      | Only used for tx latency testing (not needed)            |
+| SHARED_ENV_PATH          | Path to a directory containing env files                 | none (but check kustomize/replica/envs/) for examples
 
 ### Docker Image Versions
 
