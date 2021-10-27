@@ -12,8 +12,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: replica-healthcheck
-            - configMapRef:
-                name: replica-healthcheck-incluster
+            # - configMapRef:
+            #     name: replica-healthcheck-incluster
           ports:
             - containerPort: 3000
               name: metrics
