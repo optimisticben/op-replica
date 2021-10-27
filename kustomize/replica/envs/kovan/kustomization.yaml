@@ -5,15 +5,9 @@ configMapGenerator:
   - name: data-transport-layer
     envs:
       - ./data-transport-layer.env
-  - name: data-transport-layer-incluster
-    envs:
-      - ./data-transport-layer-incluster.env
   - name: l2geth-replica
     envs:
       - ./l2geth-replica.env
   - name: replica-healthcheck
     envs:
       - ./replica-healthcheck.env
-  - name: replica-healthcheck-incluster
-    envs:
-      - ./replica-healthcheck-incluster.env
