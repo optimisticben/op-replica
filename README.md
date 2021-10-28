@@ -48,17 +48,14 @@ Change any other settings required for your environment
 
 | Variable                 | Purpose                                                  | Default
 | ------------------------ | -------------------------------------------------------- | -----------
-| L1_RPC_ENDPOINT          | External layer 1 RPC provider (you provide)              | -
+| DATA_TRANSPORT_LAYER__L2_RPC_ENDPOINT |
 | DTL_IMAGE_TAG            | Data transport layer version                             | 0.4.3
-| DTL_PORT                 | Port number for the data-transport-layer endpoint        | 7879
 | ETH_NETWORK              | Ethereum Layer1 and Layer2 network (mainnet,kovan)       | mainnet (change to `kovan` for the test network)
-| ETH_NETWORK_RPC_PROVIDER | Layer2 source of truth endpoint, used for the sync check | https://mainnet.optimism.io (change to `https://kovan.optimism.io` for the test network)
-| ETH_REPLICA_RPC_PROVIDER | Layer2 local replica endpoint, used for the sync check   | http://localhost:9991
 | L2GETH_HTTP_PORT         | Port number for the l2geth endpoint                      | 9991
 | L2GETH_IMAGE_TAG         | L2geth version                                           | 0.4.6
-| L2_RECIPIENT_ADDRESS     | Only used for tx latency testing (not needed)            |
-| L2_USER_PRIVATE_KEY      | Only used for tx latency testing (not needed)            |
+| REPLICA_HEALTHCHECK__ETH_NETWORK_RPC_PROVIDER | The L2 endpoint to check the replica against |
 | SHARED_ENV_PATH          | Path to a directory containing env files                 | none (but check kustomize/replica/envs/) for examples
+
 
 ### Docker Image Versions
 
