@@ -11,7 +11,6 @@ if [[ -z $BLOCK_SIGNER_ADDRESS ]]; then
 fi
 
 geth \
-  --verbosity=5 \
   --datadir=$DATADIR \
   --password=$DATADIR/password \
   --allow-insecure-unlock \

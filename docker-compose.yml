@@ -28,8 +28,8 @@ services:
   replica-healthcheck:
     image: ethereumoptimism/replica-healthcheck:${L2GETH_IMAGE_TAG:-latest}
     env_file:
-      - .env
       - kustomize/replica/envs/kovan/replica-healthcheck.env
+      - .env
     volumes:
       - ./kustomize/replica/bases/configmaps/:/scripts/
 volumes:
