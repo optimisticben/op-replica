@@ -4,8 +4,8 @@ services:
   data-transport-layer:
     image: ethereumoptimism/data-transport-layer:${DTL_IMAGE_TAG:-latest}
     env_file:
-      - .env
       - ${SHARED_ENV_PATH}/data-transport-layer.env
+      - .env
     ports:
       - ${DTL_PORT:-7878}:7878
     volumes:
@@ -18,8 +18,8 @@ services:
       #- "sleep infinity"
       - "/scripts/check-for-chaindata.sh && /scripts/l2geth-replica-start.sh"
     env_file:
-      - .env
       - ${SHARED_ENV_PATH}/l2geth-replica.env
+      - .env
     ports:
       - ${L2GETH_HTTP_PORT:-9991}:8545
     volumes:
