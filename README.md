@@ -28,12 +28,6 @@ These packages are required to run the replica:
 1. [Docker](https://www.docker.com/)
 1. [Docker compose](https://docs.docker.com/compose/install/)
 
-In addition, if you want to run the sync test, you need:
-
-3. [Node.js](https://nodejs.org/en/), version 12 or later
-4. [Classic Yarn](https://classic.yarnpkg.com/lang/en/)
-
-
 ## Configuration
 
 To configure the project, clone this repository and copy the `env.example` file to `.env`.
@@ -48,13 +42,14 @@ Change any other settings required for your environment
 
 | Variable                 | Purpose                                                  | Default
 | ------------------------ | -------------------------------------------------------- | -----------
-| DATA_TRANSPORT_LAYER__L2_RPC_ENDPOINT |
-| DTL_IMAGE_TAG            | Data transport layer version                             | 0.4.3
+| DATA_TRANSPORT_LAYER__L1_RPC_ENDPOINT | An endpoint for the L1 network, either kovan or mainnet.
+| DATA_TRANSPORT_LAYER__L2_RPC_ENDPOINT | Optimistic endpoint, such as https://kovan.optimism.io or https://mainnet.optimism.io
+| REPLICA_HEALTHCHECK__ETH_NETWORK_RPC_PROVIDER | The L2 endpoint to check the replica against | (typically the same as the DATA_TRANSPORT_LAYER__L2_RPC_ENDPOINT)
+| DTL_IMAGE_TAG            | Data transport layer version                             | 0.4.3 (see below)
 | ETH_NETWORK              | Ethereum Layer1 and Layer2 network (mainnet,kovan)       | mainnet (change to `kovan` for the test network)
 | L2GETH_HTTP_PORT         | Port number for the l2geth endpoint                      | 9991
-| L2GETH_IMAGE_TAG         | L2geth version                                           | 0.4.6
-| REPLICA_HEALTHCHECK__ETH_NETWORK_RPC_PROVIDER | The L2 endpoint to check the replica against |
-| SHARED_ENV_PATH          | Path to a directory containing env files                 | none (but check kustomize/replica/envs/) for examples
+| L2GETH_IMAGE_TAG         | L2geth version                                           | 0.4.6 (see below)
+| SHARED_ENV_PATH          | Path to a directory containing env files                 | [a directory under ./kustomize/replica/envs](https://github.com/optimisticben/op-replica/tree/main/kustomize/replica/envs)
 
 
 ### Docker Image Versions
@@ -71,7 +66,7 @@ We recommend using the latest versions of both docker images. Find them as GitHu
 
 ## Usage
 
-- Start the replica:
+- Start the replica (after which you can access it at `http://localhost/L2GETH_HTTP_PORT`:
    ```sh
    docker-compose up -d
    ```
@@ -93,24 +88,15 @@ We recommend using the latest versions of both docker images. Find them as GitHu
 
 
 ## Sync Check
+ 
+There is a sync check container. It fails at startup because at that point the replica is not running yet. But you can run it later with this command:
 
-To make sure your replica is running correctly, we've provided a script that checks its state roots against our sequencer.
-
-```
-yarn
-npx ts-node src/sync-check.ts
-```
-
-You can also run this sync check as an express server that exposes metrics:
-```
-npx ts-node src/index.ts
+```sh
+docker start op-replica_replica-healthcheck_1
 ```
 
-## Transaction-write latency Check
+And then view its status using this command:
 
-We've also provided a script to test a replica endpoint's transaction latency.
-
-```
-yarn
-npx ts-node src/tx-latency.ts
+```sh
+docker logs op-replica_replica-healthcheck_1 -f
 ```
