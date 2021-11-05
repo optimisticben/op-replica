@@ -9,7 +9,7 @@ L1](https://research.paradigm.xyz/optimism#data-availability-batches), so submit
 You need two components to replicate Optimistic Ethereum:
 
 - `data-transport-layer`, which retrieves and indexes blocks from L1. To access L1 you need an Ethereum Layer 1 provider, such as
-  [Infura](https://infura.io/).
+  [Infura](https://infura.io/).
 
 - `l2geth`, which provides an Ethereum node where you applications can connect and run API calls.
 
@@ -28,12 +28,6 @@ These packages are required to run the replica:
 1. [Docker](https://www.docker.com/)
 1. [Docker compose](https://docs.docker.com/compose/install/)
 
-In addition, if you want to run the sync test, you need:
-
-3. [Node.js](https://nodejs.org/en/), version 12 or later
-4. [Classic Yarn](https://classic.yarnpkg.com/lang/en/)
-
-
 ## Configuration
 
 To configure the project, clone this repository and copy the `env.example` file to `.env`.
@@ -46,15 +40,16 @@ Fill in the rest of the `.env` file with your endpoints.
 
 Change any other settings required for your environment
 
-| Variable                 | Purpose                                                  | Default
+| Variable                 | Purpose                                                  | Default
 | ------------------------ | -------------------------------------------------------- | -----------
-| DATA_TRANSPORT_LAYER__L2_RPC_ENDPOINT |
-| DTL_IMAGE_TAG            | Data transport layer version                             | 0.4.3
-| ETH_NETWORK              | Ethereum Layer1 and Layer2 network (mainnet,kovan)       | mainnet (change to `kovan` for the test network)
-| L2GETH_HTTP_PORT         | Port number for the l2geth endpoint                      | 9991
-| L2GETH_IMAGE_TAG         | L2geth version                                           | 0.4.6
-| REPLICA_HEALTHCHECK__ETH_NETWORK_RPC_PROVIDER | The L2 endpoint to check the replica against |
-| SHARED_ENV_PATH          | Path to a directory containing env files                 | none (but check kustomize/replica/envs/) for examples
+| DATA_TRANSPORT_LAYER__L1_RPC_ENDPOINT | An endpoint for the L1 network, either kovan or mainnet.
+| DATA_TRANSPORT_LAYER__L2_RPC_ENDPOINT | Optimistic endpoint, such as https://kovan.optimism.io or https://mainnet.optimism.io
+| REPLICA_HEALTHCHECK__ETH_NETWORK_RPC_PROVIDER | The L2 endpoint to check the replica against | (typically the same as the DATA_TRANSPORT_LAYER__L2_RPC_ENDPOINT)
+| DTL_IMAGE_TAG            | Data transport layer version                             | 0.4.3 (see below)
+| ETH_NETWORK              | Ethereum Layer1 and Layer2 network (mainnet,kovan)       | mainnet (change to `kovan` for the test network)
+| L2GETH_HTTP_PORT         | Port number for the l2geth endpoint                      | 9991
+| L2GETH_IMAGE_TAG         | L2geth version                                           | 0.4.6 (see below)
+| SHARED_ENV_PATH          | Path to a directory containing env files                 | [a directory under ./kustomize/replica/envs](https://github.com/optimisticben/op-replica/tree/main/kustomize/replica/envs)
 
 
 ### Docker Image Versions
@@ -62,55 +57,46 @@ Change any other settings required for your environment
 We recommend using the latest versions of both docker images. Find them as GitHub tags
 [here](https://github.com/ethereum-optimism/optimism/tags) and as published Docker images linked in the badges:
 
-| Package                                                                                                                         | Docker                                                                                                                                                                                                              |
+| Package                                                                                                                         | Docker                                                                                                                                                                                                              |
 | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`@eth-optimism/l2geth`](https://github.com/ethereum-optimism/optimism/tree/master/l2geth)                                      | [![Docker Image Version (latest by date)](https://img.shields.io/docker/v/ethereumoptimism/l2geth)](https://hub.docker.com/r/ethereumoptimism/l2geth/tags?page=1&ordering=last_updated)                             |
+| [`@eth-optimism/l2geth`](https://github.com/ethereum-optimism/optimism/tree/master/l2geth)                                      | [![Docker Image Version (latest by date)](https://img.shields.io/docker/v/ethereumoptimism/l2geth)](https://hub.docker.com/r/ethereumoptimism/l2geth/tags?page=1&ordering=last_updated)                             |
 | [`@eth-optimism/data-transport-layer`](https://github.com/ethereum-optimism/optimism/tree/master/packages/data-transport-layer) | [![Docker Image Version (latest by date)](https://img.shields.io/docker/v/ethereumoptimism/data-transport-layer)](https://hub.docker.com/r/ethereumoptimism/data-transport-layer/tags?page=1&ordering=last_updated) |
 
 
 
 ## Usage
 
-- Start the replica:
-   ```sh
-   docker-compose up -d
-   ```
+- Start the replica (after which you can access it at `http://localhost/L2GETH_HTTP_PORT`:
+   ```sh
+   docker-compose up -d
+   ```
 
 - Get the logs for `l2geth`:
-  ```sh
-  docker logs op-replica_l2geth_1
-  ```
+  ```sh
+  docker logs op-replica_l2geth_1
+  ```
 
 - Get the logs for `data-transport-layer`:
-  ```sh
-  docker logs op-replica_dtl_1
-  ```
+  ```sh
+  docker logs op-replica_dtl_1
+  ```
 
 - Stop the replica:
-  ```sh
-  docker-compose down
-  ```
+  ```sh
+  docker-compose down
+  ```
 
 
 ## Sync Check
+ 
+There is a sync check container. It fails at startup because at that point the replica is not running yet. But you can run it later with this command:
 
-To make sure your replica is running correctly, we've provided a script that checks its state roots against our sequencer.
-
-```
-yarn
-npx ts-node src/sync-check.ts
-```
-
-You can also run this sync check as an express server that exposes metrics:
-```
-npx ts-node src/index.ts
+```sh
+docker start op-replica_replica-healthcheck_1
 ```
 
-## Transaction-write latency Check
+And then view its status using this command:
 
-We've also provided a script to test a replica endpoint's transaction latency.
-
-```
-yarn
-npx ts-node src/tx-latency.ts
+```sh
+docker logs op-replica_replica-healthcheck_1 -f
 ```
