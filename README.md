@@ -66,19 +66,19 @@ We recommend using the latest versions of both docker images. Find them as GitHu
 
 ## Usage
 
-- Start the replica (after which you can access it at `http://localhost/L2GETH_HTTP_PORT`:
+- Start the replica (after which you can access it at `http://localhost:L2GETH_HTTP_PORT`:
    ```sh
    docker-compose up -d
    ```
 
 - Get the logs for `l2geth`:
   ```sh
-  docker logs op-replica_l2geth_1
+  docker logs op-replica_l2geth-replica_1
   ```
 
 - Get the logs for `data-transport-layer`:
   ```sh
-  docker logs op-replica_dtl_1
+  docker logs op-replica_data-transport-layer_1
   ```
 
 - Stop the replica:
