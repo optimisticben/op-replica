@@ -26,7 +26,7 @@ services:
       - geth:/geth
       - ./kustomize/replica/bases/configmaps/:/scripts/
   replica-healthcheck:
-    image: ethereumoptimism/replica-healthcheck:${L2GETH_IMAGE_TAG:-latest}
+    image: ethereumoptimism/replica-healthcheck:0.3.0
     env_file:
       - kustomize/replica/envs/kovan/replica-healthcheck.env
       - .env
