@@ -15,7 +15,7 @@ You need two components to replicate Optimistic Ethereum:
 
 ## Resource requirements
 
-The `data-tansport-layer` should run with 1 CPU and 256Mb of memory.
+The `data-transport-layer` should run with 1 CPU and 256Mb of memory.
 
 The `l2geth` process should run with 1 or 2 CPUs and between 4 and 8Gb of memory.
 
@@ -45,10 +45,10 @@ Change any other settings required for your environment
 | DATA_TRANSPORT_LAYER__L1_RPC_ENDPOINT | An endpoint for the L1 network, either kovan or mainnet.
 | DATA_TRANSPORT_LAYER__L2_RPC_ENDPOINT | Optimistic endpoint, such as https://kovan.optimism.io or https://mainnet.optimism.io
 | REPLICA_HEALTHCHECK__ETH_NETWORK_RPC_PROVIDER | The L2 endpoint to check the replica against | (typically the same as the DATA_TRANSPORT_LAYER__L2_RPC_ENDPOINT)
-| DTL_IMAGE_TAG            | Data transport layer version                             | 0.4.3 (see below)
+| DTL_IMAGE_TAG            | Data transport layer version                             | 0.5.10 (see below)
 | ETH_NETWORK              | Ethereum Layer1 and Layer2 network (mainnet,kovan)       | mainnet (change to `kovan` for the test network)
 | L2GETH_HTTP_PORT         | Port number for the l2geth endpoint                      | 9991
-| L2GETH_IMAGE_TAG         | L2geth version                                           | 0.4.6 (see below)
+| L2GETH_IMAGE_TAG         | L2geth version                                           | 0.5.5 (see below)
 | SHARED_ENV_PATH          | Path to a directory containing env files                 | [a directory under ./kustomize/replica/envs](https://github.com/optimisticben/op-replica/tree/main/kustomize/replica/envs)
 
 

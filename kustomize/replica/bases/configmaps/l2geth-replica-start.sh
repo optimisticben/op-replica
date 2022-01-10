@@ -10,7 +10,7 @@ if [[ -z $BLOCK_SIGNER_ADDRESS ]]; then
     exit 1
 fi
 
-geth \
+exec geth \
   --datadir=$DATADIR \
   --password=$DATADIR/password \
   --allow-insecure-unlock \
