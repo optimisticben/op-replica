@@ -30,7 +30,7 @@ These packages are required to run the replica:
 
 ## Configuration
 
-To configure the project, clone this repository and copy the `env.example` file to `.env`.
+To configure the project, clone this repository and copy the `default.env` file to `.env`.
 
 Set the `SHARED_ENV_PATH` to an existing collection of environment files, or copy those, make your changes and point to that new directory.
 
@@ -49,7 +49,9 @@ Change any other settings required for your environment
 | ETH_NETWORK              | Ethereum Layer1 and Layer2 network (mainnet,kovan)       | mainnet (change to `kovan` for the test network)
 | L2GETH_HTTP_PORT         | Port number for the l2geth endpoint                      | 9991
 | L2GETH_IMAGE_TAG         | L2geth version                                           | 0.5.5 (see below)
+| DTL_PORT                 | Port number for the DTL endpoint, for troubleshooting    | 7878
 | SHARED_ENV_PATH          | Path to a directory containing env files                 | [a directory under ./kustomize/replica/envs](https://github.com/optimisticben/op-replica/tree/main/kustomize/replica/envs)
+| COMPOSE_FILE             | The yml files to use with docker-compose                 | replica.yml:replica-shared.yml
 
 
 ### Docker Image Versions
