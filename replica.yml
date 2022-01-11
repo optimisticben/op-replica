@@ -3,7 +3,7 @@ version: "3.4"
 services:
   data-transport-layer:
     image: ethereumoptimism/data-transport-layer:${DTL_IMAGE_TAG:-latest}
-    restart: unless-stopped
+    restart: ${RESTART}
     env_file:
       - ${SHARED_ENV_PATH}/data-transport-layer.env
       - .env
@@ -11,7 +11,8 @@ services:
       - dtl:/db
   l2geth-replica:
     image: ethereumoptimism/l2geth:${L2GETH_IMAGE_TAG:-latest}
-    restart: unless-stopped
+    restart: ${RESTART}
+    stop_grace_period: 3m
     entrypoint:
       - /bin/sh
       - -c
@@ -24,8 +25,8 @@ services:
       - geth:/geth
       - ./kustomize/replica/bases/configmaps/:/scripts/
   replica-healthcheck:
-    image: ethereumoptimism/replica-healthcheck:0.3.0
-    restart: unless-stopped
+    image: ethereumoptimism/replica-healthcheck:${HC_IMAGE_TAG:-latest}
+    restart: ${RESTART}
     env_file:
       - kustomize/replica/envs/kovan/replica-healthcheck.env
       - .env

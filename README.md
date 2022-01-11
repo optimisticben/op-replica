@@ -42,16 +42,19 @@ Change any other settings required for your environment
 
 | Variable                 | Purpose                                                  | Default
 | ------------------------ | -------------------------------------------------------- | -----------
+| COMPOSE_FILE             | The yml files to use with docker-compose                 | replica.yml:replica-shared.yml
+| ETH_NETWORK              | Ethereum Layer1 and Layer2 network (mainnet,kovan)       | kovan (change to `mainnet` for the production network)
 | DATA_TRANSPORT_LAYER__L1_RPC_ENDPOINT | An endpoint for the L1 network, either kovan or mainnet.
 | DATA_TRANSPORT_LAYER__L2_RPC_ENDPOINT | Optimistic endpoint, such as https://kovan.optimism.io or https://mainnet.optimism.io
 | REPLICA_HEALTHCHECK__ETH_NETWORK_RPC_PROVIDER | The L2 endpoint to check the replica against | (typically the same as the DATA_TRANSPORT_LAYER__L2_RPC_ENDPOINT)
-| DTL_IMAGE_TAG            | Data transport layer version                             | 0.5.10 (see below)
-| ETH_NETWORK              | Ethereum Layer1 and Layer2 network (mainnet,kovan)       | mainnet (change to `kovan` for the test network)
-| L2GETH_HTTP_PORT         | Port number for the l2geth endpoint                      | 9991
-| L2GETH_IMAGE_TAG         | L2geth version                                           | 0.5.5 (see below)
-| DTL_PORT                 | Port number for the DTL endpoint, for troubleshooting    | 7878
 | SHARED_ENV_PATH          | Path to a directory containing env files                 | [a directory under ./kustomize/replica/envs](https://github.com/optimisticben/op-replica/tree/main/kustomize/replica/envs)
-| COMPOSE_FILE             | The yml files to use with docker-compose                 | replica.yml:replica-shared.yml
+| GCMODE                   | Whether to run l2geth as an `archive` or `full` node     | archive
+| L2GETH_IMAGE_TAG         | L2geth version                                           | 0.5.8 (see below)
+| DTL_IMAGE_TAG            | Data transport layer version                             | latest (see below)
+| HC_IMAGE_TAG             | Health check version                                     | latest (see below)
+| L2GETH_HTTP_PORT         | Port number for the l2geth RPC endpoint                  | 9991
+| L2GETH_WS_PORT           | Port number for the l2geth WebSockets endpoint           | 9992
+| DTL_PORT                 | Port number for the DTL endpoint, for troubleshooting    | 7878
 
 
 ### Docker Image Versions
@@ -63,7 +66,7 @@ We recommend using the latest versions of both docker images. Find them as GitHu
 | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [`@eth-optimism/l2geth`](https://github.com/ethereum-optimism/optimism/tree/master/l2geth)                                      | [![Docker Image Version (latest by date)](https://img.shields.io/docker/v/ethereumoptimism/l2geth)](https://hub.docker.com/r/ethereumoptimism/l2geth/tags?page=1&ordering=last_updated)                             |
 | [`@eth-optimism/data-transport-layer`](https://github.com/ethereum-optimism/optimism/tree/master/packages/data-transport-layer) | [![Docker Image Version (latest by date)](https://img.shields.io/docker/v/ethereumoptimism/data-transport-layer)](https://hub.docker.com/r/ethereumoptimism/data-transport-layer/tags?page=1&ordering=last_updated) |
-
+| [`@eth-optimism/replica-healthcheck`](https://github.com/ethereum-optimism/optimism/tree/master/packages/replica-healthcheck) | [![Docker Image Version (latest by date)](https://img.shields.io/docker/v/ethereumoptimism/replica-healthcheck)](https://hub.docker.com/r/ethereumoptimism/replica-healthcheck/tags?page=1&ordering=last_updated) |
 
 
 ## Usage
@@ -75,12 +78,12 @@ We recommend using the latest versions of both docker images. Find them as GitHu
 
 - Get the logs for `l2geth`:
   ```sh
-  docker logs op-replica_l2geth-replica_1
+  docker-compose logs -f l2geth-replica
   ```
 
 - Get the logs for `data-transport-layer`:
   ```sh
-  docker logs op-replica_data-transport-layer_1
+  docker-compose logs -f data-transport-layer
   ```
 
 - Stop the replica:
@@ -91,14 +94,8 @@ We recommend using the latest versions of both docker images. Find them as GitHu
 
 ## Sync Check
  
-There is a sync check container. It fails at startup because at that point the replica is not running yet. But you can run it later with this command:
+There is a sync check container. It fails at startup because at that point the replica is not running yet. It exposes metrics on port 3000, which you could pick up with a Prometheus. You can view its status with this command:
 
 ```sh
-docker start op-replica_replica-healthcheck_1
-```
-
-And then view its status using this command:
-
-```sh
-docker logs op-replica_replica-healthcheck_1 -f
+docker-compose logs -f replica-healthcheck
 ```
