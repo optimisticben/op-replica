@@ -1,0 +1,9 @@
+version: "3.4"
+
+services:
+  l2geth-replica:
+    ports:
+      - ${L2GETH_HTTP_PORT:-9991}:8545
+  data-transport-layer:
+    ports:
+      - ${DTL_PORT:-7878}:7878
