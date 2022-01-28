@@ -22,7 +22,7 @@ images:
     newTag: 0.5.10
   - name: ethereumoptimism/l2geth
     newName: ethereumoptimism/l2geth
-    newTag: 0.5.5
+    newTag: 0.5.8
   - name: ethereumoptimism/replica-healthcheck
     newName: ethereumoptimism/replica-healthcheck
     newTag: 0.3.3
