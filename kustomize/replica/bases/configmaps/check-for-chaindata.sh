@@ -42,6 +42,7 @@ else
     geth init \
         --datadir=/"$DATADIR" \
         "$TEMP_DIR"/genesis.json
+    echo geth init complete
 fi
 
 # Check for an existing keystore folder.
