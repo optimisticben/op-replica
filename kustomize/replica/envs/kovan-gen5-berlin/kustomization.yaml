@@ -13,4 +13,4 @@ configMapGenerator:
       - ./replica-healthcheck.env
   - name: geth-scripts
     files:
-      - check-for-chaindata.sh
+      - ./check-for-chaindata.sh

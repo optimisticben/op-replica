@@ -1,6 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: kovan-replica-0-5-8
+namespace: kovan-replica-0-5-9-berlin
 commonLabels:
   network: kovan
   provider: internal
@@ -22,7 +22,7 @@ images:
     newTag: 0.5.10
   - name: ethereumoptimism/l2geth
     newName: ethereumoptimism/l2geth
-    newTag: 0.5.8
+    newTag: 0.5.9
   - name: ethereumoptimism/replica-healthcheck
     newName: ethereumoptimism/replica-healthcheck
     newTag: 0.3.3
