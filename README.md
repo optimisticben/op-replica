@@ -1,8 +1,9 @@
 # Running a Network Node
 
-This project lets you set up a local read-only replica of the Optimistic Ethereum chain (either the main one or the Kovan testnet). [New
+This project lets you set up a local replica of the Optimistic Ethereum chain (either the main one or the Kovan testnet). [New
 transactions are submitted either to the sequencer outside of Ethereum or to the Canonical Transaction Chain on
-L1](https://research.paradigm.xyz/optimism#data-availability-batches), so submitting transactions to an L2 replica does not make sense.
+L1](https://research.paradigm.xyz/optimism#data-availability-batches). To submit transactions via a replica, set
+`SEQUENCER_CLIENT_HTTP` to a sequencer URL.
 
 ## Architecture
 
@@ -47,6 +48,7 @@ Change any other settings required for your environment
 | DATA_TRANSPORT_LAYER__L1_RPC_ENDPOINT | An endpoint for the L1 network, either kovan or mainnet.
 | DATA_TRANSPORT_LAYER__L2_RPC_ENDPOINT | Optimistic endpoint, such as https://kovan.optimism.io or https://mainnet.optimism.io
 | REPLICA_HEALTHCHECK__ETH_NETWORK_RPC_PROVIDER | The L2 endpoint to check the replica against | (typically the same as the DATA_TRANSPORT_LAYER__L2_RPC_ENDPOINT)
+| SEQUENCER_CLIENT_HTTP | The L2 sequencer to forward tx to  | (typically the same as the DATA_TRANSPORT_LAYER__L2_RPC_ENDPOINT)
 | SHARED_ENV_PATH          | Path to a directory containing env files                 | [a directory under ./kustomize/replica/envs](https://github.com/optimisticben/op-replica/tree/main/kustomize/replica/envs)
 | GCMODE                   | Whether to run l2geth as an `archive` or `full` node     | archive
 | L2GETH_IMAGE_TAG         | L2geth version                                           | 0.5.8 (see below)
