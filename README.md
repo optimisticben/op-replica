@@ -55,7 +55,7 @@ Change any other settings required for your environment
 | L2GETH_HTTP_PORT         | Port number for the l2geth RPC endpoint                  | 9991
 | L2GETH_WS_PORT           | Port number for the l2geth WebSockets endpoint           | 9992
 | DTL_PORT                 | Port number for the DTL endpoint, for troubleshooting    | 7878
-
+| GETH_INIT_SCRIPT         | The script name to run when initializing l2geth          | A file under kustomize/replica/bases/configmaps/
 
 ### Docker Image Versions
 

@@ -17,7 +17,7 @@ services:
       - /bin/sh
       - -c
       #- "sleep infinity"
-      - "/scripts/check-for-chaindata.sh && /scripts/l2geth-replica-start.sh"
+      - "/scripts/$GETH_INIT_SCRIPT && /scripts/l2geth-replica-start.sh"
     env_file:
       - ${SHARED_ENV_PATH}/l2geth-replica.env
       - .env

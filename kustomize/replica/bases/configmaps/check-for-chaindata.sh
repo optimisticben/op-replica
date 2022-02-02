@@ -1,6 +1,7 @@
 #!/bin/sh
 set -eou
 
+echo running "${0}"
 if [ -z "$DATADIR" ]; then
     echo "Must pass DATADIR"
     exit 1
