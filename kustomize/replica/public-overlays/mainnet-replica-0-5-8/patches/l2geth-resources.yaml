@@ -8,6 +8,19 @@ spec:
     spec:
       containers:
         - name: l2geth-replica
+          command:
+            - geth
+            - --config=/l2geth-config/l2geth.toml
+            - --datadir=$(DATADIR)
+            - --password=$(DATADIR)/password
+            - --allow-insecure-unlock
+            - --unlock=$(BLOCK_SIGNER_ADDRESS)
+            - --mine
+            - --miner.etherbase=$(BLOCK_SIGNER_ADDRESS)
+            - --metrics
+            - --metrics.influxdb
+            - --metrics.influxdb.endpoint=http://influxdb.monitoring:8086
+            - --metrics.influxdb.database=$(NAMESPACE)
           resources:
             limits:
               cpu: "8"
