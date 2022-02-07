@@ -1,5 +1,12 @@
 ---
 version: "3.4"
+x-logging: &logging
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: "3"
+
 services:
   data-transport-layer:
     image: ethereumoptimism/data-transport-layer:${DTL_IMAGE_TAG:-latest}
@@ -9,6 +16,7 @@ services:
       - .env
     volumes:
       - dtl:/db
+    <<: *logging
   l2geth-replica:
     image: ethereumoptimism/l2geth:${L2GETH_IMAGE_TAG:-latest}
     restart: ${RESTART}
@@ -24,14 +32,16 @@ services:
     volumes:
       - geth:/geth
       - ./kustomize/replica/bases/configmaps/:/scripts/
+    <<: *logging
   replica-healthcheck:
     image: ethereumoptimism/replica-healthcheck:${HC_IMAGE_TAG:-latest}
     restart: ${RESTART}
     env_file:
-      - kustomize/replica/envs/kovan/replica-healthcheck.env
+      - ${SHARED_ENV_PATH}/replica-healthcheck.env
       - .env
     volumes:
       - ./kustomize/replica/bases/configmaps/:/scripts/
+    <<: *logging
 volumes:
   dtl:
   geth:
