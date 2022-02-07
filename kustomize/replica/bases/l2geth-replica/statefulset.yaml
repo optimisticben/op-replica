@@ -69,6 +69,8 @@ spec:
             mountPath: /script/liveliness
           - name: l2geth-replica-data
             mountPath: /geth
+          - name: l2geth-config
+            mountPath: /l2geth-config
         livenessProbe:
           exec:
             command:
@@ -91,3 +93,6 @@ spec:
           configMap:
             name: geth-scripts
             defaultMode: 0777
+        - name: l2geth-config
+          configMap:
+            name: l2geth-config
