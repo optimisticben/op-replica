@@ -18,8 +18,8 @@ resources:
 
 images:
   - name: ethereumoptimism/data-transport-layer
-    newName: ethereumoptimism/data-transport-layer
-    newTag: 0.5.13
+    newName: ethereumoptimism/data-transport-layer@sha256
+    newTag: 01c7638062325a10e0d0ff572a0814c6e8ef780dc6aa569ba6664ab25cc701d6
   - name: ethereumoptimism/l2geth
     newName: ethereumoptimism/l2geth
     newTag: 0.5.11
