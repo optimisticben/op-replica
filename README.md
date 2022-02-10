@@ -31,13 +31,13 @@ These packages are required to run the replica:
 
 ## Configuration
 
-To configure the project, clone this repository and copy the `default.env` file to `.env`.
+To configure the project, clone this repository and copy either `default-kovan.env` or `default-mainnet.env` file to `.env`.
 
-Set the `SHARED_ENV_PATH` to an existing collection of environment files, or copy those, make your changes and point to that new directory.
+Review the `SHARED_ENV_PATH` configurations, no changes are required, but depending on the use case, you may need copy these examples to a new directory and make your changes.
 
-Fill in the rest of the `.env` file with your endpoints.
+!! Update DATA_TRANSPORT_LAYER__L1_RPC_ENDPOINT to a valid endpoint !!
 
-### Additional Settings
+### Settings
 
 Change any other settings required for your environment
 
