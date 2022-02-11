@@ -19,7 +19,7 @@ resources:
 images:
   - name: ethereumoptimism/data-transport-layer
     newName: ethereumoptimism/data-transport-layer@sha256
-    newTag: 01c7638062325a10e0d0ff572a0814c6e8ef780dc6aa569ba6664ab25cc701d6
+    newTag: fe7e84c27e31121af09bcfb485ee11f4ba27d6113f3aee2dd244f07200331e2e
   - name: ethereumoptimism/l2geth
     newName: ethereumoptimism/l2geth
     newTag: 0.5.11
@@ -29,6 +29,7 @@ images:
 
 patchesStrategicMerge:
   - ./patches/l2geth-resources.yaml
+  - ./patches/replica-healthcheck.yaml
 
 patches:
   - path: ./patches/l2geth-volume.yaml
