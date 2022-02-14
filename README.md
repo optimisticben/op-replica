@@ -89,3 +89,7 @@ There is a sync check container. It fails at startup because at that point the r
 ```sh
 docker-compose logs -f replica-healthcheck
 ```
+
+## Registration
+
+[Register here](https://groups.google.com/a/optimism.io/g/optimism-announce) to get announcements, such as notifications of when you're supposed to update your replica.
