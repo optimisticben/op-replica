@@ -14,7 +14,7 @@ resources:
   - ../../bases/configmaps
   - ../../bases/servicemonitors
   - ../../bases/replica-healthcheck
-  - ./l2geth-volume.yaml
+  - ./volumes.yaml
 
 images:
   - name: ethereumoptimism/data-transport-layer
@@ -28,8 +28,8 @@ images:
     newTag: 0.3.6
 
 patchesStrategicMerge:
-  - ./patches/dtl-endpoints.yaml
-  - ./patches/l2geth-resources.yaml
+  - ./patches/dtl.yaml
+  - ./patches/l2geth.yaml
   - ./patches/replica-healthcheck.yaml
 
 patches:
@@ -39,3 +39,9 @@ patches:
       version: v1
       kind: StatefulSet
       name: l2geth-replica
+  - path: ./patches/dtl-volume.yaml
+    target:
+      group: apps
+      version: v1
+      kind: StatefulSet
+      name: data-transport-layer
