@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: mainnet-replica-0-5-11-berlin
 commonLabels:
-  network: kovan
+  network: mainnet
   provider: internal
 
 bases:
@@ -19,13 +19,13 @@ resources:
 images:
   - name: ethereumoptimism/data-transport-layer
     newName: ethereumoptimism/data-transport-layer
-    newTag: 0.5.10
+    newTag: 0.5.13
   - name: ethereumoptimism/l2geth
     newName: ethereumoptimism/l2geth
     newTag: 0.5.11
   - name: ethereumoptimism/replica-healthcheck
     newName: ethereumoptimism/replica-healthcheck
-    newTag: 0.3.3
+    newTag: 0.3.6
 
 patchesStrategicMerge:
   - ./patches/dtl-endpoints.yaml

@@ -48,6 +48,8 @@ spec:
           periodSeconds: 10
         resources: {}
       volumes:
+        - name: data-transport-layer
+          emptyDir: {}
         - name: liveliness-script
           configMap:
             name: liveliness-script
@@ -56,5 +58,3 @@ spec:
           configMap:
             name: wait-scripts
             defaultMode: 0777
-        - name: data-transport-layer
-          emptyDir: {}
