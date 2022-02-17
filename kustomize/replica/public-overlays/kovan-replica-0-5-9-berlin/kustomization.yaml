@@ -14,7 +14,7 @@ resources:
   - ../../bases/configmaps
   - ../../bases/servicemonitors
   - ../../bases/replica-healthcheck
-  - ./l2geth-volume.yaml
+  - ./volumes.yaml
   - ./ingress.yaml
 
 images:
@@ -40,3 +40,9 @@ patches:
       version: v1
       kind: StatefulSet
       name: l2geth-replica
+  - path: ./patches/dtl-volume.yaml
+    target:
+      group: apps
+      version: v1
+      kind: StatefulSet
+      name: data-transport-layer
