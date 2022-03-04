@@ -11,3 +11,5 @@ spec:
   selector:
     matchLabels:
       app: data-transport-layer
+  targetLabels:
+    - sync_source

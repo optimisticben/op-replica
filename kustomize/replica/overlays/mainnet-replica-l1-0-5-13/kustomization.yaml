@@ -4,6 +4,7 @@ namespace: mainnet-replica-l1-0-5-13
 commonLabels:
   network: mainnet
   provider: internal
+  sync_source: l1
 
 bases:
   - ../../envs/mainnet-gen5-l1-berlin/
