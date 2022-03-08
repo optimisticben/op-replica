@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: replica-healthcheck
 spec:
-  replicas: 0
+  replicas: 1
   template:
     spec:
       containers:
