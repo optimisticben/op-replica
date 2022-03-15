@@ -1,3 +1,11 @@
+# !!!! This repo is archived !!!!
+
+Please see https://github.com/ethereum-optimism/optimism/tree/develop/infra/op-replica
+
+
+
+
+
 # Running a Network Node
 
 This project lets you set up a local replica of the Optimistic Ethereum chain (either the main one or the Kovan testnet). [New
